@@ -32,15 +32,10 @@ Methods:
    corresponds to an event but not a particular model state change (e.g. a "bump" when a click
    occurs).
 */
+import { forEach, isEqual, keys, omit } from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var _ = {
-  forEach: require('lodash/forEach'),
-  isEqual: require('lodash/isEqual'),
-  keys: require('lodash/keys'),
-  omit: require('lodash/omit'),
-};
-var React = require('react');
-var ReactDOM = require('react-dom');
 var Velocity = require('./lib/velocity-animate-shim');
 
 var VelocityComponent = React.createClass({
@@ -73,7 +68,7 @@ var VelocityComponent = React.createClass({
   },
 
   componentWillUpdate: function (newProps, newState) {
-    if (!_.isEqual(newProps.animation, this.props.animation)) {
+    if (!isEqual(newProps.animation, this.props.animation)) {
       this._stopAnimation();
       this._scheduleAnimation();
     }
@@ -103,7 +98,7 @@ var VelocityComponent = React.createClass({
     }
 
     // Delegate all props except for the ones that we have specified as our own via propTypes.
-    var opts = _.omit(this.props, _.keys(this.constructor.propTypes));
+    var opts = omit(this.props, keys(this.constructor.propTypes));
     Velocity(this._getDOMTarget(), this.props.animation, opts);
   },
 

@@ -40,17 +40,10 @@ Statics
 Inspired by https://gist.github.com/tkafka/0d94c6ec94297bb67091
 */
 
-var _ = {
-  each: require('lodash/each'),
-  extend: require('lodash/extend'),
-  forEach: require('lodash/forEach'),
-  isEqual: require('lodash/isEqual'),
-  keys: require('lodash/keys'),
-  omit: require('lodash/omit'),
-  pluck: require('lodash/map'),
-};
-var React = require('react');
-var ReactDOM = require('react-dom');
+import { each, extend, forEach, isEqual, keys, omit, map } from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 var ReactTransitionGroup = require('react-addons-transition-group');
 var Velocity = require('./lib/velocity-animate-shim');
 
@@ -143,7 +136,7 @@ var VelocityTransitionGroup = React.createClass({
 
   render: function () {
     // Pass any props that are not our own on into the TransitionGroup delegate.
-    var transitionGroupProps = _.omit(this.props, _.keys(this.constructor.propTypes));
+    var transitionGroupProps = omit(this.props, keys(this.constructor.propTypes));
 
     // Without our custom childFactory, we just get a default TransitionGroup that doesn't do
     // anything special at all.
@@ -187,7 +180,7 @@ var VelocityTransitionGroup = React.createClass({
 
     // We're not going to start the animation for a tick, so set the node's display to none (or any
     // custom "hide" style provided) so that it doesn't flash in.
-    _.forEach(this.props.enterHideStyle, function (val, key) {
+    forEach(this.props.enterHideStyle, function (val, key) {
       Velocity.CSS.setPropertyValue(node, key, val);
     });
 
@@ -262,7 +255,7 @@ var VelocityTransitionGroup = React.createClass({
     } else {
       animation = (animationProp != null) ? animationProp.animation : null;
       style = (animationProp != null) ? animationProp.style : null;
-      opts = _.omit(animationProp, 'animation', 'style');
+      opts = omit(animationProp, 'animation', 'style');
     }
 
     return {
@@ -277,8 +270,8 @@ var VelocityTransitionGroup = React.createClass({
       return;
     }
 
-    var nodes = _.pluck(queue, 'node');
-    var doneFns = _.pluck(queue, 'doneFn');
+    var nodes = map(queue, 'node');
+    var doneFns = map(queue, 'doneFn');
 
     var parsedAnimation = this._parseAnimationProp(animationProp);
     var animation = parsedAnimation.animation;
@@ -294,9 +287,9 @@ var VelocityTransitionGroup = React.createClass({
     // we always run it, regardless of the animation, since it's probably doing something around
     // opacity or positioning that Velocity will not necessarily reset.
     if (entering) {
-      if (!_.isEqual(this.props.enterShowStyle, {display: ''})
+      if (!isEqual(this.props.enterShowStyle, {display: ''})
         || !(/^(fade|slide)/.test(animation) || /In$/.test(animation))) {
-        style = _.extend({}, this.props.enterShowStyle, style);
+        style = extend({}, this.props.enterShowStyle, style);
       }
     }
 
@@ -305,7 +298,7 @@ var VelocityTransitionGroup = React.createClass({
     // cases that you need to support your static styles being visible on the element before
     // the animation begins.
     if (style != null) {
-      _.each(style, function (value, key) {
+      each(style, function (value, key) {
         Velocity.hook(nodes, key, value);
       });
     }
@@ -348,7 +341,7 @@ var VelocityTransitionGroup = React.createClass({
     // stopped before getting anywhere. This should get us on the other side of both completeFn and
     // any _finishAnimation that's happening.
     shimRequestAnimationFrame(function () {
-      Velocity(nodes, animation, _.extend({}, opts, {
+      Velocity(nodes, animation, extend({}, opts, {
         complete: combinedCompleteFn,
       }));
     });
@@ -358,10 +351,10 @@ var VelocityTransitionGroup = React.createClass({
     var parsedAnimation = this._parseAnimationProp(animationProp);
     var animation = parsedAnimation.animation;
     var style = parsedAnimation.style;
-    var opts = _.extend({}, parsedAnimation.opts, overrideOpts);
+    var opts = extend({}, parsedAnimation.opts, overrideOpts);
 
     if (style != null) {
-      _.each(style, function (value, key) {
+      each(style, function (value, key) {
         Velocity.hook(node, key, value);
       });
     }
