@@ -1,9 +1,12 @@
 // Copyright (c) 2015 Twitter, Inc. and other contributors
 
-var _ = {
-  isObject: require('lodash/isObject'),
-};
-var Velocity = require('./lib/velocity-animate-shim');
+//var _ = {
+//  isObject: require('lodash/isObject'),
+//};
+//var Velocity = require('./lib/velocity-animate-shim');
+
+import { isObject } from 'lodash';
+import Velocity from 'velocity-animate';
 
 var effectCounter = 0;
 
@@ -54,8 +57,8 @@ var effectCounter = 0;
 // <VelocityComponent animation={this.state.isUp ? Animations.up : Animations.down}>
 //   ...
 // <Velocity>
-function registerEffect(suffix, animation) {
-  if (_.isObject(suffix)) {
+export function registerEffect(suffix, animation) {
+  if (isObject(suffix)) {
     animation = suffix;
     suffix = '';
   }
@@ -75,6 +78,6 @@ function registerEffect(suffix, animation) {
   return key;
 }
 
-module.exports = {
-  registerEffect: registerEffect,
-};
+//module.exports = {
+//  registerEffect: registerEffect,
+//};

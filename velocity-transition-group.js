@@ -44,8 +44,11 @@ import { each, extend, forEach, isEqual, keys, omit, map } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var ReactTransitionGroup = require('react-addons-transition-group');
-var Velocity = require('./lib/velocity-animate-shim');
+//var ReactTransitionGroup = require('react-addons-transition-group');
+//var Velocity = require('./lib/velocity-animate-shim');
+
+import ReactTransitionGroup from 'react-addons-transition-group';
+import Velocity from 'velocity-animate';
 
 // Shim requestAnimationFrame for browsers that don't support it, in particular IE 9.
 var shimRequestAnimationFrame =

@@ -36,7 +36,8 @@ import { forEach, isEqual, keys, omit } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var Velocity = require('./lib/velocity-animate-shim');
+//var Velocity = require('./lib/velocity-animate-shim');
+import Velocity from 'velocity-animate';
 
 var VelocityComponent = React.createClass({
   displayName: 'VelocityComponent',
