@@ -159,4 +159,4 @@ var VelocityComponent = React.createClass({
   }
 });
 
-module.exports = VelocityComponent;
+export default VelocityComponent;
