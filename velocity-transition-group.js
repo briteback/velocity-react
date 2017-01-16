@@ -377,4 +377,4 @@ var VelocityTransitionGroup = React.createClass({
   },
 });
 
-module.exports = VelocityTransitionGroup;
+export default VelocityTransitionGroup;
