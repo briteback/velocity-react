@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
 var React = require('react');
-var VelocityComponent = require('../../velocity-component');
-var VelocityTransitionGroup = require('../../velocity-transition-group');
+var VelocityComponent = require('../../src/velocity-component');
+var VelocityTransitionGroup = require('../../src/velocity-transition-group');
 
 var Box = require('../components/box');
 var EmojiSpan = require('../components/emoji-span');
@@ -13,29 +13,25 @@ require('../css/loading-placeholder.css');
 var LOCATION_COUNT = 4;
 
 var BUILDINGS = ['🏠', '🏡', '🏢', '🏬', '🏭', '🏣', '🏤', '🏥', '🏦', '🏨', '🏩', '💒', '⛪', '🏪', '🏫'];
-var CAPTIALS = ['Montgomery', 'Juneau', 'Phoenix', 'Little Rock', 'Sacramento', 'Denver', 'Hartford', 'Dover',
+var CAPITALS = ['Montgomery', 'Juneau', 'Phoenix', 'Little Rock', 'Sacramento', 'Denver', 'Hartford', 'Dover',
   'Tallahassee', 'Atlanta', 'Honolulu', 'Boise', 'Springfield', 'Indianapolis', 'Des Moines', 'Topeka', 'Frankfort',
   'Baton Rouge', 'Augusta', 'Annapolis', 'Boston', 'Lansing', 'St. Paul', 'Jackson', 'Jefferson City', 'Helena',
   'Lincoln', 'Carson City', 'Concord', 'Trenton', 'Santa Fe', 'Albany', 'Raleigh', 'Bismarck', 'Columbus',
   'Oklahoma City', 'Salem', 'Harrisburg', 'Providence', 'Columbia', 'Pierre', 'Nashville', 'Austin', 'Salt Lake City',
   'Montpelier', 'Richmond', 'Olympia', 'Charleston', 'Madison', 'Cheyenne'];
 
-var CrossfadeExample = React.createClass({
-  displayName: 'CrossfadeExample',
+class CrossfadeExample extends React.Component {
+  state = {
+    expanded: false,
+    items: null,
+    duration: 500,
+  };
 
-  getInitialState: function () {
-    return {
-      expanded: false,
-      items: null,
-      duration: 500,
-    };
-  },
-
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     window.clearTimeout(this.locationTimeout);
-  },
+  }
 
-  whenToggleClicked: function () {
+  whenToggleClicked = () => {
     if (this.state.expanded) {
       this.setState({
         expanded: false,
@@ -51,24 +47,24 @@ var CrossfadeExample = React.createClass({
 
       this.locationTimeout = window.setTimeout(this.loadLocations, this.state.duration * 1.5);
     }
-  },
+  };
 
-  loadLocations: function () {
+  loadLocations = () => {
     this.setState({
       items: Array.apply(null, Array(LOCATION_COUNT)).map(function () {
         return {
           building: _.sample(BUILDINGS),
-          city: _.sample(CAPTIALS),
+          city: _.sample(CAPITALS),
         };
       }),
     });
-  },
+  };
 
-  whenOptionClicked: function (event) {
+  whenOptionClicked = (event) => {
     this.setState({ duration: parseInt(event.target.value) });
-  },
+  };
 
-  render: function () {
+  render() {
     var groupStyle = {
       borderBottom: '1px solid #3f83b7',
       padding: '0 1px',
@@ -121,9 +117,9 @@ var CrossfadeExample = React.createClass({
         </form>
       </div>
     );
-  },
+  }
 
-  renderLocations: function () {
+  renderLocations = () => {
     var boxStyle = {
       backgroundColor: '#fefefe',
       padding: '5px 10px',
@@ -137,9 +133,9 @@ var CrossfadeExample = React.createClass({
         <div key={this.state.items != null ? 'locations' : 'loading'} style={boxStyle}>{locations.map(this.renderLocation)}</div>
       </LoadingCrossfadeComponent>
     );
-  },
+  };
 
-  renderLocation: function(location, i) {
+  renderLocation = (location, i) => {
     location = location || {building: '', city: ''};
 
     var emojiStyle = {
@@ -168,7 +164,7 @@ var CrossfadeExample = React.createClass({
         </div>
       </div>
     );
-  }
-});
+  };
+}
 
 module.exports = CrossfadeExample;

@@ -8,9 +8,10 @@ details about why and how we built this.
 
 See the [live demo](http://twitter-fabric.github.io/velocity-react/).
 
-**Latest version:** v1.1.5 includes React 15 in its devDependencies.
+**Latest version:** v1.3.3 fixes timer clearing bug on unmount of VelocityTransitionGroup
 
-*Note: v1.1.0 and later require React 0.14.*
+*Note: v1.1.0 and later require React 0.14.x*
+*Note: v1.3.0 and later require React 15.3.x and should work with React 16*
 
 ## Running the demo
 
@@ -93,6 +94,13 @@ return to after animating away.
   A special value of "children" will use the direct children of the node, since there isn't a
   great way to specify that to `querySelectorAll`.
 
+`interruptBehavior`: Specifies what should happen to an in-progress animation if the `animation`
+  property changes. By default is `stop`, which stops it at its current position, letting the new
+  animation use that as a starting point. This generally gives the smoothest results. Other options
+  are `finish`, which jumps the animation to its end state, and `queue`, which will proceed with
+  the new animation only after the old one has finished. These options may be necessary to avoid
+  bad behavior when certain built-in effects like "slideUp" and "slideDown" are toggled rapidly.
+
 Unrecognized properties are passed as options to Velocity (e.g. `duration`, `delay`, `loop`).
 
 #### Methods
@@ -139,7 +147,7 @@ are prerequisites for correct animation. The style value is applied using Veloci
 routines, which may differ from React's.
 
 Any hash entries beyond `animation` and `style` are passed in an options hash to Velocity. Use this
-for options like `stagger`, `reverse`, *&tc.*
+for options like `stagger`, `reverse`, *&c.*
 
 #### Statics
 
@@ -195,6 +203,6 @@ and for working with us to release this library.
 Thanks to Kevin Robinson and Sam Phillips for all of the discussions and code reviews.
 
 ## License
-Copyright 2015–6 Twitter, Inc.
+Copyright 2017 Google Inc.
 
 Licensed under the MIT License: https://opensource.org/licenses/MIT
