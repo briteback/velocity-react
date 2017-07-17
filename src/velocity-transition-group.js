@@ -130,11 +130,11 @@ class VelocityTransitionGroup extends React.Component {
       shimCancelAnimationFrame(this._scheduledAnimationFrame);
     }
 
-    _.forEach(this._timers, function(timer) {
+    forEach(this._timers, function(timer) {
       clearTimeout(timer);
     });
 
-    _.forEach(this._scheduledAnimationRunFrames, function(frame) {
+    forEach(this._scheduledAnimationRunFrames, function(frame) {
       shimCancelAnimationFrame(frame);
     });
 
@@ -352,7 +352,7 @@ class VelocityTransitionGroup extends React.Component {
         this._scheduledAnimationRunFrames.splice(idx, 1);
       }
 
-      Velocity(nodes, animation, _.extend({}, opts, {
+      Velocity(nodes, animation, extend({}, opts, {
         complete: combinedCompleteFn,
       }));
     });

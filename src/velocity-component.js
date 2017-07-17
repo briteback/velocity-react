@@ -65,7 +65,7 @@ class VelocityComponent extends React.Component {
   }
 
   componentWillUpdate(newProps, newState) {
-    if (!_.isEqual(newProps.animation, this.props.animation)) {
+    if (!isEqual(newProps.animation, this.props.animation)) {
       if (newProps.interruptBehavior === 'stop') {
         this._stopAnimation();
       } else if (newProps.interruptBehavior === 'finish') {
@@ -149,7 +149,7 @@ class VelocityComponent extends React.Component {
   // completion handlers and associated react objects. This crudely clears these references.
   _clearVelocityCache(target) {
     if (target.length) {
-      _.forEach(target, this._clearVelocityCache)
+      forEach(target, this._clearVelocityCache)
     } else {
       Velocity.Utilities.removeData(target, ['velocity', 'fxqueue']);
     }
